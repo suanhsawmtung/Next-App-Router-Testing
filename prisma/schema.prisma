@@ -19,39 +19,24 @@ model Task {
 }
 
 model Event {
-  id                  Int             @id @default(autoincrement())
-  title               String
-  about               String
-  image               String?
-  numberOfCredit      Int
-  duration            String //
-  location_url        String
-  course_delivery     String //
-  course_descriptions String
-  start_date          DateTime
-  end_date            DateTime
-  agenda              Json //
-  participations      Participation[]
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @updatedAt
-  isArchieved         Boolean         @default(false)
+  id             Int             @id @default(autoincrement())
+  title          String
+  start_date     DateTime
+  end_date       DateTime
+  participations Participation[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 model Participation {
-  id           Int      @id @default(autoincrement())
-  eventId      Int
-  userId       Int
-  document_url String? // img
-  credit       Int //
-  debit        Int //
-  balance      Int //
-  statement    String //
-  feedback     String
-  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  user         User     @relation(fields: [userId], references: [id])
-  activityAt   DateTime @default(now())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  eventId    Int
+  userId     Int
+  event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id])
+  activityAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([userId, eventId])
 }
@@ -60,8 +45,6 @@ model User {
   id             Int             @id @default(autoincrement())
   name           String
   email          String          @unique
-  password       String
-  profile_url    String?
   participations Participation[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
